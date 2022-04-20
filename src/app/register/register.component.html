@@ -1,0 +1,71 @@
+<body>
+  <h1 class="heading"> <span>Registration</span> </h1>
+<div [ngClass]="{'right-panel-active': signup}" class="container" id="container">
+	<div class="form-container sign-up-container">
+		<form action="#">
+			<h1>Create Account</h1>
+			<input type="text"  placeholder="Name" />
+			<input type="text"  placeholder="Adress" />
+			<input type="text"  placeholder="Phone number" />
+			<input type="email" placeholder="Email" />
+			<input type="password" placeholder="Password" />
+			<select >
+				<option value="" disabled selected hidden>Register As</option>
+				<option>Customer</option>
+				<option>Vendor</option>
+			</select>
+
+            <button>Sign Up</button>
+
+            <!-- form Animation test -->
+            <!-- <div class="form__div">
+                <input type="text" class="form__input" placeholder=" ">
+                <label for="" class="form__label">Email</label>
+            </div>
+
+            <div class="form__div">
+                <input type="password" class="form__input" placeholder=" ">
+                <label for="" class="form__label">Password</label>
+            </div> -->
+
+		</form>
+	</div>
+
+    <!-- Sign In form -->
+	<div [ngClass]="{'right-panel-active': login}" class="form-container sign-in-container">
+		<form action="#">
+			<h1>Sign in</h1>
+
+            <!-- SOcial Media Icons -->
+            <!-- here icons of facebook and google and linkedin and the classes here by name of bootstrap classes   -->
+			<div class="social-container">
+				<a href="#" class="social"><i class="fab fa-facebook-f"> </i> </a>
+				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+			</div>
+			<span>or use your account</span>
+			<input type="email" placeholder="Email" />
+			<input type="password" placeholder="Password" />
+			<a href="#">Forgot your password?</a>
+			<button>Sign In</button>
+		</form>
+	</div>
+
+    <!--Panels-->
+	<div class="overlay-container">
+		<div class="overlay">
+			<div class="overlay-panel overlay-left">
+				<h1>Welcome Back!</h1>
+				<p>To keep connected with us please login with your personal info</p>
+				<button class="ghost" (click)="signin()" id="signIn">Sign In</button>
+			</div>
+			<div class="overlay-panel overlay-right">
+				<h1>Hello, Friend!</h1>
+				<p>Enter your personal details and start journey with us</p>
+				<button class="ghost " (click)="register()"  id="signUp">Sign Up</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+</body>
