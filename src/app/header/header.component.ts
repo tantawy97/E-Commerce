@@ -1,5 +1,8 @@
 import { Component, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import Swiper from 'swiper';
+import { UserService } from '../Services/user.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -12,11 +15,42 @@ export class HeaderComponent implements OnInit {
   cartStatus = false;
   signup=false;
   opennav=false;
-filter=false
-  constructor() { }
+filter=false;
+invalidLogin:boolean
+
+
+loginForm:FormGroup=new FormGroup({
+'email':new FormControl(null,[Validators.required]),
+'password':new FormControl(null,[Validators.required])
+})
+  constructor(private loginservice:UserService,private router:Router) { }
 
   ngOnInit(): void {
   }
+  LogIn(){
+
+    this.loginservice.SignIn({
+      email:this.loginForm.value.email,
+      password:this.loginForm.value.password
+    }).subscribe(
+      res=>{
+        const token=(<any>res).token;
+        localStorage.setItem("jwt",token);
+        this.invalidLogin=false;
+        this.router.navigate(["/"]);
+        console.log(res)
+      },
+      err=>{
+        this.invalidLogin=true
+      }
+    )
+  }
+
+
+
+
+
+
 
   onMenuBtnClicked() {
     this.menuStatus = !this.menuStatus;
@@ -63,6 +97,9 @@ filter=false
   openFilter(){
     this.filter=!this.filter
   }
+
+
+
 
 
 }
