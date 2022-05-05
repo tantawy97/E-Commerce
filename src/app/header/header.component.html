@@ -36,8 +36,10 @@
   <div class="icons">
       <div class="fas fa-bars" (click)="onMenuBtnClicked()" id="menu-btn"></div>
       <div class="fas fa-search" (click)="onSearchBtnClicked()" id="search-btn"></div>
-      <div class="fas fa-shopping-cart" (click)="onCartBtnClicked()" id="cart-btn"></div>
-      <div class="fas fa-user" (click)="onLoginBtnClicked()" id="login-btn"></div>
+      <div class="fas fa-shopping-cart"  (click)="onCartBtnClicked()" id="cart-btn"></div>
+      <div   class="fas fa-sign-out-alt"(click)="logout()" *ngIf="loginservice.isUserAuthenticated()" id="logout-btn"></div>
+      <div class="fas fa-user" (click)="onLoginBtnClicked()" *ngIf="!loginservice.isUserAuthenticated()" id="login-btn"></div>
+
   </div>
 
   <form action="" [ngClass]="{'active': searchStatus}" class="search-form">
@@ -45,7 +47,7 @@
       <label for="search-box"  class="fas fa-search"></label>
   </form>
 
-  <div [ngClass]="{'active': cartStatus}"  class="shopping-cart">
+  <div [ngClass]="{'active': cartStatus}"  *ngIf="loginservice.isUserAuthenticated()" class="shopping-cart">
       <div class="box">
           <i class="fas fa-trash"></i>
           <img src="../../assets/images/cart-img-1.png" alt="">
@@ -158,8 +160,9 @@
       <a href="#" class="btn">checkout</a>
   </div>
 
-  <form [ngClass]="{'active': loginStatus}" [formGroup]="loginForm" (ngSubmit)="LogIn()"class="login-form">
+  <form *ngIf="!loginservice.isUserAuthenticated()" [ngClass]="{'active': loginStatus}" [formGroup]="loginForm" (ngSubmit)="LogIn()"class="login-form">
       <h3>login now</h3>
+      <div *ngIf="invalidLogin" class="alert alert-danger">Invalid Email or Password</div>
       <input type="email" placeholder="your email" class="box" formControlName="email">
       <input type="password" placeholder="your password" class="box" formControlName="password">
       <p>forget your password <a (click)="onlink()" routerLinkActive="active" routerLink="forgetpassword">click here</a></p>

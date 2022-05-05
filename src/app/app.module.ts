@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { JwtModule } from '@auth0/angular-jwt';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './about/about.component';
@@ -13,9 +14,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './register/register.component';
 import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
 import{HttpClientModule} from '@angular/common/http';
+import { AuthguardService } from './Services/authguard.service';
+export function tokenGetter(){
+  return localStorage.getItem("jwt");
+}
 let routes:Routes = [
   {path:"", component:HomeComponent},
-  {path:"about", component:AboutComponent},
+  {path:"about", component:AboutComponent,canActivate:[AuthguardService]},
   {path:"forgetpassword", component:ForgetpasswordComponent},
  {path:"register", component:RegisterComponent},
   {path:"home", component:HomeComponent},
@@ -41,7 +46,14 @@ let routes:Routes = [
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    JwtModule.forRoot({
+      config:{
+        tokenGetter:tokenGetter,
+        allowedDomains:["localhost:5155"],
+        disallowedRoutes:[]
+      }
+    })
   ],
   providers: [
 

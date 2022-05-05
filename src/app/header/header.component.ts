@@ -1,7 +1,7 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import Swiper from 'swiper';
+import { Router,ActivatedRoute } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserService } from '../Services/user.service';
 @Component({
   selector: 'app-header',
@@ -23,7 +23,7 @@ loginForm:FormGroup=new FormGroup({
 'email':new FormControl(null,[Validators.required]),
 'password':new FormControl(null,[Validators.required])
 })
-  constructor(private loginservice:UserService,private router:Router) { }
+  constructor(public loginservice:UserService,private router:Router, private route: ActivatedRoute,private jwtHelper:JwtHelperService) { }
 
   ngOnInit(): void {
   }
@@ -37,13 +37,24 @@ loginForm:FormGroup=new FormGroup({
         const token=(<any>res).token;
         localStorage.setItem("jwt",token);
         this.invalidLogin=false;
-        this.router.navigate(["/"]);
-        console.log(res)
+        let returnUrl=this.route.snapshot.queryParamMap.get('returnUrl');
+        this.router.navigate([returnUrl||"/"]);
+
       },
       err=>{
         this.invalidLogin=true
       }
     )
+  }
+
+  checkAuth(){
+
+
+  }
+
+  logout(){
+localStorage.removeItem("jwt");
+this.router.navigate(["/"]);
   }
 
 
@@ -71,6 +82,9 @@ loginForm:FormGroup=new FormGroup({
     this.searchStatus = false;
     this.loginStatus = false;
     this.cartStatus = !this.cartStatus;
+    if(!this.loginservice.isUserAuthenticated()){
+      this.router.navigate(["register"]);
+    }
   }
 
   onLoginBtnClicked() {
