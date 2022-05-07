@@ -37,6 +37,9 @@
       <div class="fas fa-bars" (click)="onMenuBtnClicked()" id="menu-btn"></div>
       <div class="fas fa-search" (click)="onSearchBtnClicked()" id="search-btn"></div>
       <div class="fas fa-shopping-cart"  (click)="onCartBtnClicked()" id="cart-btn"></div>
+
+         <div  routerLinkActive="active"  routerLink="createproduct" class= "fas fa-plus-circle" *ngIf="loginservice.isUserAuthenticated()" id="logout-btn">
+           </div>
       <div   class="fas fa-sign-out-alt"(click)="logout()" *ngIf="loginservice.isUserAuthenticated()" id="logout-btn"></div>
       <div class="fas fa-user" (click)="onLoginBtnClicked()" *ngIf="!loginservice.isUserAuthenticated()" id="login-btn"></div>
 
