@@ -19,6 +19,7 @@ import { AuthguardService } from './Services/authguard.service';
 import { AddproductComponent } from './addproduct/addproduct.component';
 import { ProductService } from './Services/product.service';
 import { UserService } from './Services/user.service';
+import { NgxCaptchaModule } from 'ngx-captcha';
 export function tokenGetter(){
   return localStorage.getItem("jwt");
 }
@@ -53,6 +54,7 @@ let routes:Routes = [
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    NgxCaptchaModule,
     RouterModule.forRoot(routes),
     JwtModule.forRoot({
       config:{

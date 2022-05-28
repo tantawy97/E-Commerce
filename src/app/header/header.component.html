@@ -170,6 +170,12 @@
       <input type="password" placeholder="your password" class="box" formControlName="password">
       <p>forget your password <a (click)="onlink()" routerLinkActive="active" routerLink="forgetpassword">click here</a></p>
       <p>don't have an account <a (click)="onlink()" routerLinkActive="active" routerLink="register">create now</a></p>
+      <ngx-recaptcha2 #captchaElem
+      [siteKey]="siteKey"
+        [type]="type"
+    (success)="handleSuccess($event)"
+    formControlName="recaptcha" >
+    </ngx-recaptcha2>
       <input type="submit" value="login now" class="btn">
   </form>
 
